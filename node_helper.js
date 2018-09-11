@@ -54,7 +54,7 @@ module.exports = NodeHelper.create({
         console.log('No task lists found.');
       }
     });
-  }
+  },
   /**
    * Create an OAuth2 client with the given credentials, and then execute the
    * given callback function.
@@ -73,7 +73,7 @@ module.exports = NodeHelper.create({
       oAuth2Client.setCredentials(JSON.parse(token));
       callback(oAuth2Client);
     });
-  }
+  },
   /**
    * Get and store new token after prompting for user authorization, and then
    * execute the given callback with the authorized OAuth2 client.
@@ -103,7 +103,7 @@ module.exports = NodeHelper.create({
         callback(oAuth2Client);
       });
     });
-  }
+  },
 
   socketNotificationReceived: function(notification, payload) {
     var self = this;
