@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/da4throux/MMM-Buller#readme",
   "dependencies": {
-    "googleapis" : ">33.0.0"
+    "googleapis" : ">=33.0.0"
   }
 }
