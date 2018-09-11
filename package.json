@@ -1,0 +1,25 @@
+{
+  "name": "MMM-Buller",
+  "version": "0.1.0",
+  "description": "Messages and tasks",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/da4throux/MMM-Buller"
+  },
+  "keywords": [
+    "magic mirror",
+    "smart mirror",
+    "tasks",
+    "buller"
+  ],
+  "author": "da4throux",
+  "contributors": "https://github.com/da4throux/MMM-Buller/graphs/contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/da4throux/MMM-Buller/issues"
+  },
+  "homepage": "https://github.com/da4throux/MMM-Buller#readme",
+  "dependencies": {
+    "googleapis" : ">33.0.0"
+  }
+}
