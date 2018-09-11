@@ -10,7 +10,7 @@ Module.register("MMM-Buller",{
   // Define module defaults
   defaults: {
     debug: true, //console.log more things to help debugging
-    lists_template: {
+    list_template: {
       type: "gTasks", // allow using other kind of data input later on
       updateInterval: 1 * 60 * 1000 * 60 * 6, // every 6 hours
       initialLoadDelay: 0, // start delay seconds
