@@ -22,12 +22,6 @@ module.exports = NodeHelper.create({
   start: function() {
     var self = this;
     this.googleAuthReady = false;
-    //G Load client secrets from a local file.
-    fs.readFile('credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      // Authorize a client with credentials, then call the Google Tasks API.
-      self.authorize(JSON.parse(content), self.listTaskLists);
-    });
     this.started = false;
   },
 
@@ -114,6 +108,12 @@ module.exports = NodeHelper.create({
         console.log ( payload );
       }
       this.started = true;
+      //G Load client secrets from a local file.
+      fs.readFile(this.config.credentials, (err, content) => {
+        if (err) return console.log('Error loading client secret file:', err);
+        // Authorize a client with credentials, then call the Google Tasks API.
+        self.authorize(JSON.parse(content), self.listTaskLists);
+      });
       //init serverSide if necessary
       this.config.lists.forEach(function(l){
         serverSide[l.id] = {};
