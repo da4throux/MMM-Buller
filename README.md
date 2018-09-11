@@ -23,6 +23,11 @@ Name comes from the French word for 'Bubble', made into a verb, which refers to 
 
 1. Clone repository into `../modules/` inside your MagicMirror folder.
 2. Run `npm install` inside `../modules/MMM-Buller/` folder
+```sh
+git clone https://github.com/da4throux/MMM-Buller.git
+cd MMM-Buller
+npm install
+```
 3. Add the module to the MagicMirror config
 ```
 		{
