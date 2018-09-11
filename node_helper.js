@@ -19,7 +19,7 @@ const NodeHelper = require("node_helper");
 var serverSide = [];
 
 module.exports = NodeHelper.create({
-  start: function () {
+  start: function() {
     var self = this;
     this.googleAuthReady = false;
     //G Load client secrets from a local file.
@@ -36,7 +36,7 @@ module.exports = NodeHelper.create({
    *
    * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
    */
-  function listTaskLists(auth) {
+  listTaskLists: function(auth) {
     var self = this;
     const service = google.tasks({version: 'v1', auth});
     service.tasklists.list({
@@ -61,7 +61,7 @@ module.exports = NodeHelper.create({
    * @param {Object} credentials The authorization client credentials.
    * @param {function} callback The callback to call with the authorized client.
    */
-  function authorize(credentials, callback) {
+  authorize: function(credentials, callback) {
     var self = this;
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
@@ -80,7 +80,7 @@ module.exports = NodeHelper.create({
    * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
    * @param {getEventsCallback} callback The callback for the authorized client.
    */
-  function getNewToken(oAuth2Client, callback) {
+  getNewToken: function(oAuth2Client, callback) {
     const authUrl = oAuth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: SCOPES,
