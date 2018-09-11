@@ -19,8 +19,8 @@ const NodeHelper = require("node_helper");
 var serverSide = [];
 
 module.exports = NodeHelper.create({
-  var self = this;
   start: function () {
+    var self = this;
     this.googleAuthReady = false;
     //G Load client secrets from a local file.
     fs.readFile('credentials.json', (err, content) => {
@@ -37,6 +37,7 @@ module.exports = NodeHelper.create({
    * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
    */
   function listTaskLists(auth) {
+    var self = this;
     const service = google.tasks({version: 'v1', auth});
     service.tasklists.list({
       maxResults: 10,
@@ -61,6 +62,7 @@ module.exports = NodeHelper.create({
    * @param {function} callback The callback to call with the authorized client.
    */
   function authorize(credentials, callback) {
+    var self = this;
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -104,6 +106,7 @@ module.exports = NodeHelper.create({
   }
 
   socketNotificationReceived: function(notification, payload) {
+    var self = this;
     if (notification === 'SET_CONFIG' && this.started == false) {
       this.config = payload;
       if (this.config.debug) {
