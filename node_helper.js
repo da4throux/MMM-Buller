@@ -19,7 +19,7 @@ const NodeHelper = require("node_helper");
 var serverSide = [];
 
 module.exports = NodeHelper.create({
-  const self = this;
+  var self = this;
   start: function () {
     this.googleAuthReady = false;
     //G Load client secrets from a local file.
@@ -37,7 +37,6 @@ module.exports = NodeHelper.create({
    * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
    */
   function listTaskLists(auth) {
-    const self = this;
     const service = google.tasks({version: 'v1', auth});
     service.tasklists.list({
       maxResults: 10,
@@ -62,7 +61,6 @@ module.exports = NodeHelper.create({
    * @param {function} callback The callback to call with the authorized client.
    */
   function authorize(credentials, callback) {
-    const self = this;
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
@@ -106,7 +104,6 @@ module.exports = NodeHelper.create({
   }
 
   socketNotificationReceived: function(notification, payload) {
-    const self = this;
     if (notification === 'SET_CONFIG' && this.started == false) {
       this.config = payload;
       if (this.config.debug) {
@@ -131,7 +128,7 @@ module.exports = NodeHelper.create({
   },
 
   fetchHandleAPI: function(_l) {
-    var self = this, retry = true;
+    var retry = true;
     if (this.config.debug) { console.log (' *** MMM-Buller fetchHandleAPI for: ' + _l.label);}
     switch (_l.type) {
       case'gTasks':
