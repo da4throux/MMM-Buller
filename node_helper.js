@@ -33,7 +33,7 @@ module.exports = NodeHelper.create({
    */
   listTaskLists: function(auth) {
     var self = this;
-    const this.service = google.tasks({version: 'v1', auth});
+    this.service = google.tasks({version: 'v1', auth});
     this.service.tasklists.list({
       maxResults: 10,
     }, (err, res) => {
@@ -103,6 +103,26 @@ module.exports = NodeHelper.create({
     });
   },
 
+  getTasksFromList: function () {
+    var self = this;
+    self.service.tasklists.get({
+      tasklist: self.gTasks['MMM'],
+      maxResults: 10,
+    }, (err, res) => {
+      if (err) return console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
+      self.googleAuthReady = true;
+      const taskLists = res.data.items;
+      if (taskLists) {
+        if (self.config.debug) {
+          console.log ('received list');
+          console.log (JSON.stringify(res.data.items));
+        }
+      } else {
+        console.log('No task lists found.');
+      }
+    });
+  },
+
   socketNotificationReceived: function(notification, payload) {
     var self = this;
     if (notification === 'SET_CONFIG' && this.started == false) {
@@ -135,26 +155,6 @@ module.exports = NodeHelper.create({
       this.started = true;
     }
     getTasksFromList();
-  },
-
-  getTasksFromList: function () {
-    var self = this;
-    self.service.tasklists.get({
-      tasklist: self.gTasks['MMM'],
-      maxResults: 10,
-    }, (err, res) => {
-      if (err) return console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
-      self.googleAuthReady = true;
-      const taskLists = res.data.items;
-      if (taskLists) {
-        if (self.config.debug) {
-          console.log ('received list');
-          console.log (JSON.stringify(res.data.items));
-        }
-      } else {
-        console.log('No task lists found.');
-      }
-    });
   },
 
   fetchHandleAPI: function(_l) {
