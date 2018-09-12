@@ -13,7 +13,6 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/tasks.readonly'];
-const TOKEN_PATH = this.data.path + '\\token.json';
 
 const NodeHelper = require("node_helper");
 var serverSide = [];
@@ -23,6 +22,7 @@ module.exports = NodeHelper.create({
     var self = this;
     this.googleAuthReady = false;
     this.started = false;
+    this.TOKEN_PATH = this.data.path + '\\token.json';
   },
 
   /**
@@ -62,7 +62,7 @@ module.exports = NodeHelper.create({
         client_id, client_secret, redirect_uris[0]);
 
     // Check if we have previously stored a token.
-    fs.readFile(TOKEN_PATH, (err, token) => {
+    fs.readFile(self.TOKEN_PATH, (err, token) => {
       if (err) return self.getNewToken(oAuth2Client, callback);
       oAuth2Client.setCredentials(JSON.parse(token));
       callback(oAuth2Client);
@@ -90,9 +90,9 @@ module.exports = NodeHelper.create({
         if (err) return console.error('Error retrieving access token', err);
         oAuth2Client.setCredentials(token);
         // Store the token to disk for later program executions
-        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+        fs.writeFile(self.TOKEN_PATH, JSON.stringify(token), (err) => {
           if (err) console.error(err);
-          console.log('Token stored to', TOKEN_PATH);
+          console.log('Token stored to', self.TOKEN_PATH);
         });
         callback(oAuth2Client);
       });
