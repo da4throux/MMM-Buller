@@ -13,7 +13,7 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/tasks.readonly'];
-const TOKEN_PATH = 'token.json';
+const TOKEN_PATH = this.data.path + '\\token.json';
 
 const NodeHelper = require("node_helper");
 var serverSide = [];
@@ -109,7 +109,7 @@ module.exports = NodeHelper.create({
       }
       this.started = true;
       //G Load client secrets from a local file.
-      fs.readFile(this.config.credentials, (err, content) => {
+      fs.readFile(this.data.path + '\\credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
         self.authorize(JSON.parse(content), self.listTaskLists);
