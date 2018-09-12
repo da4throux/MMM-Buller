@@ -33,16 +33,18 @@ module.exports = NodeHelper.create({
    */
   listTaskLists: function(auth) {
     var self = this;
-    const service = google.tasks({version: 'v1', auth});
-    service.tasklists.list({
+    const this.service = google.tasks({version: 'v1', auth});
+    this.service.tasklists.list({
       maxResults: 10,
     }, (err, res) => {
       if (err) return console.error('The API returned an error: ' + err);
       self.googleAuthReady = true;
       const taskLists = res.data.items;
       if (taskLists) {
+        self.gTasksLists = [];
         console.log('Task lists:');
         taskLists.forEach((taskList) => {
+          self.gTasks[taskList.title] = taskList.id;
           console.log(`${taskList.title} (${taskList.id})`);
         });
       } else {
@@ -66,6 +68,7 @@ module.exports = NodeHelper.create({
     fs.readFile(self.TOKEN_PATH, (err, token) => {
       if (err) return self.getNewToken(oAuth2Client, callback);
       oAuth2Client.setCredentials(JSON.parse(token));
+      self.oAuth2Client = oAuth2Client;
       callback(oAuth2Client);
     });
   },
@@ -108,12 +111,13 @@ module.exports = NodeHelper.create({
         console.log (' *** config received from MMM.js & set in node_helper: ');
         console.log ( payload );
       }
-      this.started = true;
       //G Load client secrets from a local file.
-      fs.readFile(this.path + 'credentials.json', (err, content) => {
+      this.CREDENTIALS_PATH = this.path + 'credentials.json';
+      fs.readFile(this.CREDENTIALS_PATH, (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
-        self.authorize(JSON.parse(content), self.listTaskLists);
+        self.authorization = JSON.parse(content);
+        self.authorize(self.authorization, self.listTaskLists);
       });
       //init serverSide if necessary
       this.config.lists.forEach(function(l){
@@ -128,7 +132,29 @@ module.exports = NodeHelper.create({
           self.fetchHandleAPI(l);
         }, l.initialLoadDelay);
       });
+      this.started = true;
     }
+    getTasksFromList();
+  },
+
+  getTasksFromList: function () {
+    var self = this;
+    self.service.tasklists.get({
+      tasklist: self.gTasks['MMM'],
+      maxResults: 10,
+    }, (err, res) => {
+      if (err) return console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
+      self.googleAuthReady = true;
+      const taskLists = res.data.items;
+      if (taskLists) {
+        if (self.config.debug) {
+          console.log ('received list');
+          console.log (JSON.stringify(res.data.items));
+        }
+      } else {
+        console.log('No task lists found.');
+      }
+    });
   },
 
   fetchHandleAPI: function(_l) {
