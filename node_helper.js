@@ -22,8 +22,8 @@ module.exports = NodeHelper.create({
     var self = this;
     this.googleAuthReady = false;
     this.started = false;
-    this.path = 'modules\\MMM-Buller';
-    this.TOKEN_PATH = this.path + '\\token.json';
+    this.path = 'modules/MMM-Buller/';
+    this.TOKEN_PATH = this.path + 'token.json';
   },
 
   /**
@@ -110,7 +110,7 @@ module.exports = NodeHelper.create({
       }
       this.started = true;
       //G Load client secrets from a local file.
-      fs.readFile(this.path + '\\credentials.json', (err, content) => {
+      fs.readFile(this.path + 'credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
         self.authorize(JSON.parse(content), self.listTaskLists);
