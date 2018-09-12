@@ -1,3 +1,4 @@
 node_modules
 credentials.json
+token.json
 config_extract.js
