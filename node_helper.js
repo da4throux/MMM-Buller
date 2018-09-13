@@ -47,6 +47,7 @@ module.exports = NodeHelper.create({
           self.gTasks[taskList.title] = taskList.id;
           console.log(`${taskList.title} (${taskList.id})`);
         });
+        self.getTasksFromList();
       } else {
         console.log('No task lists found.');
       }
@@ -105,7 +106,7 @@ module.exports = NodeHelper.create({
 
   getTasksFromList: function () {
     var self = this;
-    self.service.tasklists.get({
+    this.service.tasklists.get({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
     }, (err, res) => {
@@ -154,7 +155,6 @@ module.exports = NodeHelper.create({
       });
       this.started = true;
     }
-    this.getTasksFromList();
   },
 
   fetchHandleAPI: function(_l) {
