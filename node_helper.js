@@ -154,7 +154,7 @@ module.exports = NodeHelper.create({
       });
       this.started = true;
     }
-    getTasksFromList();
+    this.getTasksFromList();
   },
 
   fetchHandleAPI: function(_l) {
