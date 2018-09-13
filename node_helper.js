@@ -33,24 +33,29 @@ module.exports = NodeHelper.create({
    */
   listTaskLists: function(auth) {
     var self = this;
-    this.service = google.tasks({version: 'v1', auth});
-    this.service.tasklists.list({
+    this.gTasksAPI = google.tasks({version: 'v1', auth});
+    this.gTasksAPI.tasklists.list({
       maxResults: 10,
-    }, (err, res) => {
-      if (err) return console.error('The API returned an error: ' + err);
-      self.googleAuthReady = true;
-      const taskLists = res.data.items;
-      if (taskLists) {
-        self.gTasksLists = [];
-        console.log('Task lists:');
-        taskLists.forEach((taskList) => {
-          self.gTasks[taskList.title] = taskList.id;
-          console.log(`${taskList.title} (${taskList.id})`);
-        });
-        self.getTasksFromList();
-      } else {
-        console.log('No task lists found.');
-      }
+    })
+      .then (res => {
+        self.googleAuthReady = true;
+        const taskLists = res.data.items;
+        if (taskLists) {
+          self.gTasksLists = [];
+          self.gTasks=[];
+          console.log('Task lists:');
+          taskLists.forEach((taskList) => {
+            self.gTasks[taskList.title] = taskList.id;
+            console.log(`${taskList.title} (${taskList.id})`);
+          });
+          self.getTasksFromList();
+        } else {
+          console.log('No task lists found.');
+        }
+      })
+      .catch(err => {
+        console.error('The API returned an error: ' + err);
+      });
     });
   },
   /**
@@ -106,7 +111,7 @@ module.exports = NodeHelper.create({
 
   getTasksFromList: function () {
     var self = this;
-    this.service.tasklists.get({
+    this.gTasksAPI.tasks.list.get({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
     }, (err, res) => {
