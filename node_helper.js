@@ -48,12 +48,10 @@ module.exports = NodeHelper.create({
             self.gTasks[taskList.title] = taskList.id;
             console.log(`${taskList.title} (${taskList.id})`);
           });
+          self.getTasksFromList();
         } else {
           console.log('No task lists found.');
         }
-      })
-      .then (res => {
-        self.getTasksFromList();
       })
       .catch(err => {
         console.error('The API returned an error: ' + err);
@@ -113,22 +111,28 @@ module.exports = NodeHelper.create({
   getTasksFromList: function () {
     var self = this;
 //    this.gTasksAPI.tasks.list.get({
-      this.gTasksAPI.tasks.list({
+    this.gTasksAPI.tasks.list({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
-    }, (err, res) => {
-      if (err) return console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
-      self.googleAuthReady = true;
-      const taskLists = res.data.items;
-      if (taskLists) {
-        if (self.config.debug) {
-          console.log ('received list');
-          console.log (JSON.stringify(res.data.items));
+    })
+      .then(res => {
+        const tasks = res.data.items;
+        self.tasks = [];
+        if (tasks) {
+          if (self.config.debug) {
+            console.log ('received list');
+            console.log (JSON.stringify(res.data.items));
+          }
+          tasks.forEach((task) => {
+            self.tasks.push(task);
+          })
+        } else {
+          console.log('No tasks found in list.');
         }
-      } else {
-        console.log('No task lists found.');
-      }
-    });
+      })
+      .catch(err => {
+        console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
+      })
   },
 
   socketNotificationReceived: function(notification, payload) {
