@@ -112,7 +112,8 @@ module.exports = NodeHelper.create({
 
   getTasksFromList: function () {
     var self = this;
-    this.gTasksAPI.tasks.list.get({
+//    this.gTasksAPI.tasks.list.get({
+      this.gTasksAPI.tasks.list({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
     }, (err, res) => {
