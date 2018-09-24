@@ -64,6 +64,7 @@ Module.register("MMM-Buller",{
     var now = new Date();
     var wrapper = document.createElement("div");
     var lists = this.config.lists;
+    var tasks = this.infos;
     var i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
@@ -81,8 +82,8 @@ Module.register("MMM-Buller",{
       wrapper.className = "small";
       wrapper.innerHTML = "Your configuration requires a 'lists' element.<br />Check github da4throux/MMM-Buller<br />for more information";
     }
-    for (i=0; i < lists.length; i++) {
-      t = lists[i];
+    for (i=0; i < tasks.length; i++) {
+      t = tasks[i];
       row = document.createElement("tr");
       firstCell = document.createElement("td");
       firstCell.className = "align-right bright";
