@@ -64,7 +64,7 @@ Module.register("MMM-Buller",{
     var now = new Date();
     var wrapper = document.createElement("div");
     var lists = this.config.lists;
-    var i, j, l, d, n, listColor;
+    var i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
     if (lists.length > 0) {
@@ -81,7 +81,16 @@ Module.register("MMM-Buller",{
       wrapper.className = "small";
       wrapper.innerHTML = "Your configuration requires a 'lists' element.<br />Check github da4throux/MMM-Buller<br />for more information";
     }
-    for (i = 0; i < lists.length; i++) {
+    for (i=0; i < lists.length; i++) {
+      t = lists[i];
+      row = document.createElement("tr");
+      firstCell = document.createElement("td");
+      firstCell.className = "align-right bright";
+      firstCell.innerHTML = t.title;
+      row.appendChild(firstCell);
+      table.appendChild(row);
+    }
+/*    for (i = 0; i < lists.length; i++) {
       l = lists[i]; // list config
       d = this.infos[i]; // data received for the list
       listColor = l.listColor ? 'color:' + l.listColor + ' !important' : false;
@@ -104,7 +113,7 @@ Module.register("MMM-Buller",{
         default:
           if (this.config.debug) { console.log('Unknown list type: ' + l.type)}
       }
-    }
+    } */
     return wrapper;
   },
 
