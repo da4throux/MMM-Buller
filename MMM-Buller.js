@@ -115,6 +115,7 @@ Module.register("MMM-Buller",{
       case "DATA":
         this.infos = payload;
         this.loaded = true;
+        console.log (this.infos);
         break;
     }
   }

@@ -117,15 +117,16 @@ module.exports = NodeHelper.create({
     })
       .then(res => {
         const tasks = res.data.items;
-        self.tasks = [];
+        self.config.tasksFetched = [];
         if (tasks) {
           if (self.config.debug) {
             console.log ('received list');
             console.log (JSON.stringify(res.data.items));
           }
           tasks.forEach((task) => {
-            self.tasks.push(task);
+            self.config.tasksFetched.push(task);
           })
+          this.sendSocketNotification("DATA", this.config.tasksFetched);
         } else {
           console.log('No tasks found in list.');
         }
