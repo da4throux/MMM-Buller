@@ -7,7 +7,7 @@
 This module helps you display elements from Google tasks lists. In particular:
 * tasks that are open (done tasks are not shown)
 * tasks that are due can be shown differently
-The first use case is to provide a similar experience the default Compliments Module, but giving the possibility to use a phone app (Google Tasks) to update / change the message.
+The first use case is to provide a similar experience the [default Compliments Module](https://github.com/MichMich/MagicMirror/tree/master/modules/default/compliments), but giving the possibility to use a phone app (Google Tasks) to update / change the message.
 The second use case will be to be able to set visual reminder on the mirror of things to do at home, or just on arriving or leaving.
 The third use case will be to offer an option to leverage meta-data in the task to display the tasks more appropriately (show more of what is relevant for that mirror at that time).
 Name comes from the French word for 'Bubble', made into a verb, which refers to the activity of doing nothing (link to task), and to little bubble of text (link to compliments use case).
