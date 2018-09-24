@@ -48,7 +48,6 @@ module.exports = NodeHelper.create({
             self.gTasks[taskList.title] = taskList.id;
             console.log(`${taskList.title} (${taskList.id})`);
           });
-          self.getTasksFromList();
         } else {
           console.log('No task lists found.');
         }
@@ -108,7 +107,7 @@ module.exports = NodeHelper.create({
     });
   },
 
-  getTasksFromList: function () {
+  getTasksFromList: function (listIndex) {
     var self = this;
 //    this.gTasksAPI.tasks.list.get({
     this.gTasksAPI.tasks.list({
@@ -132,7 +131,7 @@ module.exports = NodeHelper.create({
         }
       })
       .catch(err => {
-        console.error('When Buller called gTasks for ' + self.gTasks['MMM'] + ' list, it returned an error: ' + err);
+        console.error('When Buller called gTasks for ' + self.gTasks[self.config.lists[listIndex].name] + ' list, it returned an error: ' + err);
       })
   },
 
@@ -162,7 +161,9 @@ module.exports = NodeHelper.create({
           if (self.config.debug) {
             console.log (' *** line ' + l.label + ' intial update in ' + l.initialLoadDelay);
           }
-          self.fetchHandleAPI(l);
+          console.log ('fetching task');
+          self.getTasksFromList(l);
+//          self.fetchHandleAPI(l);
         }, l.initialLoadDelay);
       });
       this.started = true;
