@@ -48,10 +48,12 @@ module.exports = NodeHelper.create({
             self.gTasks[taskList.title] = taskList.id;
             console.log(`${taskList.title} (${taskList.id})`);
           });
-          self.getTasksFromList();
         } else {
           console.log('No task lists found.');
         }
+      })
+      .then (res => {
+        self.getTasksFromList();
       })
       .catch(err => {
         console.error('The API returned an error: ' + err);
@@ -142,7 +144,7 @@ module.exports = NodeHelper.create({
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
         self.authorization = JSON.parse(content);
-        self.authorize(self.authorization, self.listTaskLists);
+        self.authorize(self.authorization, self.listTaskLists.bind(self));
       });
       //init serverSide if necessary
       this.config.lists.forEach(function(l){
