@@ -191,14 +191,14 @@ module.exports = NodeHelper.create({
     switch (_l.type) {
       case'gTasks':
         if (self.googleAuthReady) {
-          self.getTasksFromList(l);
+          self.getTasksFromList(_l);
         } else {
           if (this.config.debug) { console.log (' not ready yet');}
         }
         break;
       default:
         if (this.config.debug) {
-          console.log(' *** unknown request: ' + l.type);
+          console.log(' *** unknown request: ' + _l.type);
         }
     }
     if (retry) {

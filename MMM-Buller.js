@@ -13,7 +13,7 @@ Module.register("MMM-Buller",{
     list_template: {
       type: "gTasks", // allow using other kind of data input later on
       updateInterval: 1 * 60 * 1000 * 60 * 6, // every 6 hours
-      initialLoadDelay: 0, // start delay seconds
+      initialLoadDelay: 100, // start delay seconds
       metaData: false, //true: leveraging metaData from the task
     },
     updateDomFrequence: 900,
