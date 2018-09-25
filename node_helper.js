@@ -186,6 +186,7 @@ module.exports = NodeHelper.create({
 
   fetchHandleAPI: function(_l) {
     var retry = true;
+    var self = this;
     if (this.config.debug) { console.log (' *** MMM-Buller fetchHandleAPI for: ' + _l.label);}
     switch (_l.type) {
       case'gTasks':
