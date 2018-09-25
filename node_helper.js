@@ -194,7 +194,7 @@ module.exports = NodeHelper.create({
     }
     if (retry) {
       if (this.config.debug) {
-        console.log (' *** list ' + _l.name + ' retries update in ' + self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10));
+        console.log (' *** list ' + _l.name + ' retries update in ' + (self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10)));
       }
       setTimeout(function() {
         self.fetchHandleAPI(_l);
