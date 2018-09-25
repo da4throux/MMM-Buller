@@ -67,7 +67,6 @@ Module.register("MMM-Buller",{
     var tasks,i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
-// ***** Need to go through each list !!!!
     if (lists.length > 0) {
       if (!this.loaded) {
         wrapper.innerHTML = "Loading information ...";
@@ -78,15 +77,17 @@ Module.register("MMM-Buller",{
         wrapper.appendChild(table);
         table.className = "small";
         for (i = 0; i < lists.length; i++) {
+          l = lists[i];
           tasks = this.infos[i];
+          listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j=0; j < tasks.length; j++) {
             t = tasks[j];
             row = document.createElement("tr");
             firstCell = document.createElement("td");
             firstCell.className = "align-right bright";
             firstCell.innerHTML = t.title;
-            if (this.infos[i].color) {
-                firstCell.setAttribute('style', 'color:' + this.infos[i].color + ' !important');
+            if (listColor) {
+                firstCell.setAttribute('style', listColor);
             }
             row.appendChild(firstCell);
             table.appendChild(row);
