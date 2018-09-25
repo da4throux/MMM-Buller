@@ -64,10 +64,10 @@ Module.register("MMM-Buller",{
     var now = new Date();
     var wrapper = document.createElement("div");
     var lists = this.config.lists;
-    var tasks = this.infos;
-    var i, j, t, d, n, listColor;
+    var tasks,i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
+// ***** Need to go through each list !!!!
     if (lists.length > 0) {
       if (!this.loaded) {
         wrapper.innerHTML = "Loading information ...";
@@ -77,21 +77,25 @@ Module.register("MMM-Buller",{
         wrapper.className = "buller";
         wrapper.appendChild(table);
         table.className = "small";
+        for (i = 0; i < lists.length; i++) {
+          tasks = this.infos[i];
+          for (j=0; j < tasks.length; j++) {
+            t = tasks[j];
+            row = document.createElement("tr");
+            firstCell = document.createElement("td");
+            firstCell.className = "align-right bright";
+            firstCell.innerHTML = t.title;
+            row.appendChild(firstCell);
+            table.appendChild(row);
+          }
+        }
       }
     } else {
       wrapper.className = "small";
       wrapper.innerHTML = "Your configuration requires a 'lists' element.<br />Check github da4throux/MMM-Buller<br />for more information";
     }
-    for (i=0; i < tasks.length; i++) {
-      t = tasks[i];
-      row = document.createElement("tr");
-      firstCell = document.createElement("td");
-      firstCell.className = "align-right bright";
-      firstCell.innerHTML = t.title;
-      row.appendChild(firstCell);
-      table.appendChild(row);
-    }
-/*    for (i = 0; i < lists.length; i++) {
+/*
+      for (i = 0; i < lists.length; i++) {
       l = lists[i]; // list config
       d = this.infos[i]; // data received for the list
       listColor = l.listColor ? 'color:' + l.listColor + ' !important' : false;

@@ -137,7 +137,8 @@ module.exports = NodeHelper.create({
           tasks.forEach((task) => {
             self.config.tasksFetched.push(task);
           })
-          this.sendSocketNotification("DATA", this.config.tasksFetched);
+          self.config.infos[listDescription.id] = self.config.tasksFetched;
+          self.sendSocketNotification("DATA", self.config.infos);
         } else {
           console.log('No tasks found in list.');
         }
@@ -165,7 +166,7 @@ module.exports = NodeHelper.create({
       });
       //init serverSide if necessary
       this.config.lists.forEach(function(l){
-        serverSide[l.id] = {};
+        this.config.infos[l.id] = {};
         if (l.type === 'gTasks') {
           //TBC update the tasks
           self.fetchHandleAPI(l);
