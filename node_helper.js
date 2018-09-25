@@ -39,7 +39,7 @@ module.exports = NodeHelper.create({
   getTaskLists: function(auth) {
     var self = this;
     if (self.config.debug) {
-      console.log ('Starting getTaskLists ');
+      console.log ('** Starting getTaskLists ');
     }
     this.gTasksAPI = google.tasks({version: 'v1', auth});
     this.gTasksAPI.tasklists.list({
@@ -115,16 +115,15 @@ module.exports = NodeHelper.create({
     });
   },
 
-  getTasksFromList: function (listIndex) {
+  getTasksFromList: function (listDescription) {
     var self = this;
 //    this.gTasksAPI.tasks.list.get({
     if (self.config.debug) {
-      console.log ('fetching tasks for: ' + JSON.stringify(listIndex));
-      console.log ('sanity check: ' + self.path);
+      console.log ('** getTasksFromList on : ' + JSON.stringify(listDescription));
       console.log ('Auth ready ? ' +  self.googleAuthReady);
     }
-    this.gTasksAPI.tasks.list({
-      tasklist: self.gTasks['MMM'],
+    self.gTasksAPI.tasks.list({
+      tasklist: self.gTasks[listDescription.name],
       maxResults: 10,
     })
       .then(res => {
@@ -144,7 +143,7 @@ module.exports = NodeHelper.create({
         }
       })
       .catch(err => {
-        console.error('When Buller called gTasks for ' + self.gTasks[self.config.lists[listIndex].name] + ' list, it returned an error: ' + err);
+        console.error('When Buller called gTasks for ' + self.gTasks[listDescription.name] + ' list, it returned an error: ' + err);
       })
   },
 
@@ -174,10 +173,12 @@ module.exports = NodeHelper.create({
           if (self.config.debug) {
             console.log (' *** line ' + l.label + ' intial update in ' + l.initialLoadDelay);
           }
-          console.log ('fetching task');
-          self.getTasksFromList(l);
-//          self.fetchHandleAPI(l);
-        }, l.initialLoadDelay);
+          console.log ('calling getTasksFromList');
+          if (self.googleAuthReady) {
+            self.getTasksFromList(l);
+          }
+          self.fetchHandleAPI(l);
+        }, l.initialLoadDelay + 10);
       });
       this.started = true;
     }
@@ -188,7 +189,11 @@ module.exports = NodeHelper.create({
     if (this.config.debug) { console.log (' *** MMM-Buller fetchHandleAPI for: ' + _l.label);}
     switch (_l.type) {
       case'gTasks':
-        //TBC
+        if (self.googleAuthReady) {
+          self.getTasksFromList(l);
+        } else {
+          if (this.config.debug) { console.log (' not ready yet');}
+        }
         break;
       default:
         if (this.config.debug) {
@@ -201,7 +206,7 @@ module.exports = NodeHelper.create({
       }
       setTimeout(function() {
         self.fetchHandleAPI(_l);
-      }, _l.updateInterval);
+      }, self.googleAuthReady ? _l.updateInterval : (l.initialLoadDelay + 10));
     }
   },
 
