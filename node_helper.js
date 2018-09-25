@@ -17,6 +17,11 @@ const SCOPES = ['https://www.googleapis.com/auth/tasks.readonly'];
 const NodeHelper = require("node_helper");
 var serverSide = [];
 
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Logging unhandled Rejection at: Promise', p, 'reason:', reason);
+  // application specific logging, throwing an error, or other logic here
+})
+
 module.exports = NodeHelper.create({
   start: function() {
     var self = this;
@@ -110,6 +115,8 @@ module.exports = NodeHelper.create({
   getTasksFromList: function (listIndex) {
     var self = this;
 //    this.gTasksAPI.tasks.list.get({
+    console.log ('fetching tasks for: ' + listIndex);
+    console.log ('sanity check: ' + self.path);
     this.gTasksAPI.tasks.list({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
