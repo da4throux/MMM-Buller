@@ -168,8 +168,9 @@ module.exports = NodeHelper.create({
         serverSide[l.id] = {};
         if (l.type === 'gTasks') {
           //TBC update the tasks
+          self.fetchHandleAPI(l);
         }
-        setTimeout(function(){
+/*        setTimeout(function(){
           if (self.config.debug) {
             console.log (' *** line ' + l.label + ' intial update in ' + l.initialLoadDelay);
           }
@@ -177,8 +178,7 @@ module.exports = NodeHelper.create({
           if (self.googleAuthReady) {
             self.getTasksFromList(l);
           }
-          self.fetchHandleAPI(l);
-        }, l.initialLoadDelay + 10);
+        }, l.initialLoadDelay + 10); */
       });
       this.started = true;
     }
@@ -203,7 +203,7 @@ module.exports = NodeHelper.create({
     }
     if (retry) {
       if (this.config.debug) {
-        console.log (' *** list ' + _l.label + ' retries update in ' + _l.updateInterval);
+        console.log (' *** list ' + _l.label + ' retries update in ' + self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10));
       }
       setTimeout(function() {
         self.fetchHandleAPI(_l);
