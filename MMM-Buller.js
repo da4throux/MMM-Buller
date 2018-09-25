@@ -85,6 +85,9 @@ Module.register("MMM-Buller",{
             firstCell = document.createElement("td");
             firstCell.className = "align-right bright";
             firstCell.innerHTML = t.title;
+            if (this.infos[i].color) {
+                firstCell.setAttribute('style', this.infos[i].color);
+            }
             row.appendChild(firstCell);
             table.appendChild(row);
           }
