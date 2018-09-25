@@ -164,9 +164,11 @@ module.exports = NodeHelper.create({
         self.authorization = JSON.parse(content);
         self.authorize(self.authorization, self.getTaskLists.bind(self));
       });
-      //init serverSide if necessary
-      this.config.lists.forEach(function(l){
-        this.config.infos[l.id] = {};
+      self.config.lists.forEach(function(l){
+        if (self.config.debug) {
+          console.log (JSON.stringify(self.config.infos))
+          console.log (JSON.stringify(l))}
+        self.config.infos[l.id] = {};
         if (l.type === 'gTasks') {
           //TBC update the tasks
           self.fetchHandleAPI(l);
