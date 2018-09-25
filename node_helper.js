@@ -170,15 +170,6 @@ module.exports = NodeHelper.create({
           //TBC update the tasks
           self.fetchHandleAPI(l);
         }
-/*        setTimeout(function(){
-          if (self.config.debug) {
-            console.log (' *** line ' + l.label + ' intial update in ' + l.initialLoadDelay);
-          }
-          console.log ('calling getTasksFromList');
-          if (self.googleAuthReady) {
-            self.getTasksFromList(l);
-          }
-        }, l.initialLoadDelay + 10); */
       });
       this.started = true;
     }
@@ -203,7 +194,7 @@ module.exports = NodeHelper.create({
     }
     if (retry) {
       if (this.config.debug) {
-        console.log (' *** list ' + _l.label + ' retries update in ' + self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10));
+        console.log (' *** list ' + _l.name + ' retries update in ' + self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10));
       }
       setTimeout(function() {
         self.fetchHandleAPI(_l);
