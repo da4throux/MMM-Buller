@@ -36,8 +36,11 @@ module.exports = NodeHelper.create({
    *
    * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
    */
-  listTaskLists: function(auth) {
+  getTaskLists: function(auth) {
     var self = this;
+    if (self.config.debug) {
+      console.log ('Starting getTaskLists ');
+    }
     this.gTasksAPI = google.tasks({version: 'v1', auth});
     this.gTasksAPI.tasklists.list({
       maxResults: 10,
@@ -115,8 +118,11 @@ module.exports = NodeHelper.create({
   getTasksFromList: function (listIndex) {
     var self = this;
 //    this.gTasksAPI.tasks.list.get({
-    console.log ('fetching tasks for: ' + listIndex);
-    console.log ('sanity check: ' + self.path);
+    if (self.config.debug) {
+      console.log ('fetching tasks for: ' + JSON.stringify(listIndex));
+      console.log ('sanity check: ' + self.path);
+      console.log ('Auth ready ? ' +  self.googleAuthReady);
+    }
     this.gTasksAPI.tasks.list({
       tasklist: self.gTasks['MMM'],
       maxResults: 10,
@@ -156,7 +162,7 @@ module.exports = NodeHelper.create({
         if (err) return console.log('Error loading client secret file:', err);
         // Authorize a client with credentials, then call the Google Tasks API.
         self.authorization = JSON.parse(content);
-        self.authorize(self.authorization, self.listTaskLists.bind(self));
+        self.authorize(self.authorization, self.getTaskLists.bind(self));
       });
       //init serverSide if necessary
       this.config.lists.forEach(function(l){
