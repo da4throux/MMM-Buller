@@ -207,7 +207,7 @@ module.exports = NodeHelper.create({
       }
       setTimeout(function() {
         self.fetchHandleAPI(_l);
-      }, self.googleAuthReady ? _l.updateInterval : (l.initialLoadDelay + 10));
+      }, self.googleAuthReady ? _l.updateInterval : (_l.initialLoadDelay + 10));
     }
   },
 
