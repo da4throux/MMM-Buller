@@ -24,7 +24,7 @@ Module.register("MMM-Buller",{
 
   // Define required scripts.
   getStyles: function() {
-    return ["MMM-Buller.css", "font-awesome.css"];
+    return ["MMM-Buller.css"]; //, "font-awesome.css" is version 4
   },
 
   // Define start sequence.
