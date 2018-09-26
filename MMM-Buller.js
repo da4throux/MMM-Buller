@@ -63,14 +63,19 @@ Module.register("MMM-Buller",{
 //  },
 
   // Add Task to an element (to simplify getDom)
-  getTaskRow: function (task, listColor, isImportant) {
-    var firstCell, row = document.createElement("tr");
+  getTaskRow: function (task, list, isImportant) {
+    var firstCell, listColor, row = document.createElement("tr");
+    listColor = list.color ? 'color:' + list.color + ' !important' : false;
     row = document.createElement("tr");
     firstCell = document.createElement("td");
     firstCell.className = "align-right bright";
-    firstCell.innerHTML = task.title;
+    firstCell.innerHTML = '';
+    if (list.icon) {
+      firstCell.innerHTML += '<i class="' + list.icon + '"></i>&nbsp';
+    }
+    firstCell.innerHTML += task.title;
     if (isImportant) {
-      firstCell.innerHTML += '<i class="fa fa-exclamation' + '"></i>&nbsp';
+      firstCell.innerHTML += '&nbsp<i class="fa fa-exclamation' + '"></i>';
     }
     if (listColor) {
         firstCell.setAttribute('style', listColor);
@@ -87,7 +92,7 @@ Module.register("MMM-Buller",{
     var now = new Date();
     var wrapper = document.createElement("div");
     var lists = this.config.lists;
-    var tasks, tasksLeft, i, j, t, n, listColor;
+    var tasks, tasksLeft, i, j, t, n;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
     var nbOfTasksDisplayed = 0;
@@ -104,24 +109,19 @@ Module.register("MMM-Buller",{
         for (i = 0; i < lists.length; i++) {
           l = lists[i];
           tasks = this.infos[i];
-          listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j = 0; j < tasks.length; j++) {
             t = tasks[j];
             if (Date.parse(t.due) < new Date && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
               nbOfTasksDisplayed++;
-              table.appendChild(this.getTaskRow(t, listColor, true));
+              table.appendChild(this.getTaskRow(t, l, true));
             } else {
-              tasksLeft.push(t);
+              tasksLeft.push([t, l]);
             }
           }
-          console.log(tasksLeft);
           while (tasksLeft.length > 0 && nbOfTasksDisplayed < this.config.maxNumberOfUsualTasksDisplayed && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
             n = Math.floor(Math.random() * Math.floor(tasksLeft.length));
             t = tasksLeft.splice(n , 1);
-            console.log ('taking out: ' + n);
-            console.log (t);
-            console.log (tasksLeft);            
-            table.appendChild(this.getTaskRow(t, listColor));
+            table.appendChild(this.getTaskRow(t[0], t[1]));
             nbOfTasksDisplayed++;
           }
         }
