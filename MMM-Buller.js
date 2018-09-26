@@ -17,8 +17,8 @@ Module.register("MMM-Buller",{
       metaData: false, //true: leveraging metaData from the task
       alwaysShowDueTask: true, //true: a due Task will always be shown on the mirror
     },
-    maximumNumberOfTask: 3,
-    minimumNumberOfTask: 1,
+    maxNumberOfTaskDisplayed: 3,
+    minNumberOfTaskDisplayed: 1,
     updateDomFrequence: 20 * 1000, //20 seconds
   },
 
@@ -78,10 +78,13 @@ Module.register("MMM-Buller",{
 
   // Override dom generator.
   getDom: function() {
+    if (this.config.debug) {
+      console.log ('Buller DOM refresh');
+    }
     var now = new Date();
     var wrapper = document.createElement("div");
     var lists = this.config.lists;
-    var tasks,i, j, t, d, n, listColor;
+    var tasks, tasksLeft, i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
     var nbOfTaskDisplayed = 0;
@@ -94,12 +97,22 @@ Module.register("MMM-Buller",{
         wrapper.className = "buller";
         wrapper.appendChild(table);
         table.className = "small";
+        tasksLeft = [];
         for (i = 0; i < lists.length; i++) {
           l = lists[i];
           tasks = this.infos[i];
           listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j=0; j < tasks.length; j++) {
-            table.appendChild(this.getTaskRow(tasks[j], listColor));
+            t = tasks[j];
+            if (Date.parse(t.due) < new Date && nbOfTaskDisplayed < this.config.maxNumberOfTaskDisplayed) {
+              nbOfTaskDisplayed++;
+              table.appendChild(this.getTaskRow(t, listColor));
+            } else {
+              tasksLeft.push(t);
+            }
+          }
+          while (tasksLeft.length > 0 && nbOfTaskDisplayed < this.config.minNumberOfTaskDisplayed && nbOfTaskDisplayed < this.config.maxNumberOfTaskDisplayed) {
+            table.appendChild(tasksLeft.splice( Math.floor(Math.random() * Math.floor(tasksLeft.length - 1)), 1));
           }
         }
       }
@@ -145,7 +158,9 @@ Module.register("MMM-Buller",{
           this.loaded = true;
           this.getDom();
         }
-        console.log (this.infos);
+        if (this.config.debug) {
+          console.log (this.infos);
+        }
         break;
     }
   }
