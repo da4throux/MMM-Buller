@@ -18,13 +18,13 @@ Module.register("MMM-Buller",{
       alwaysShowDueTask: true, //true: a due Task will always be shown on the mirror
     },
     maxNumberOfTasksDisplayed: 3,
-    maxNumberOfUsualTasksDisplayed: 1,
-    updateDomFrequence: 30 * 1000, //20 seconds
+    maxNumberOfUsualTasksDisplayed: 2,
+    updateDomFrequence: 20 * 1000, //20 seconds
   },
 
   // Define required scripts.
   getStyles: function() {
-    return ["MMM-Buller.css"];
+    return ["MMM-Buller.css", "font-awesome.css"];
   },
 
   // Define start sequence.
@@ -63,12 +63,15 @@ Module.register("MMM-Buller",{
 //  },
 
   // Add Task to an element (to simplify getDom)
-  getTaskRow: function (task, listColor) {
+  getTaskRow: function (task, listColor, isImportant) {
     var firstCell, row = document.createElement("tr");
     row = document.createElement("tr");
     firstCell = document.createElement("td");
     firstCell.className = "align-right bright";
     firstCell.innerHTML = task.title;
+    if (isImportant) {
+      firstCell.innerHTML += '<i class="fa fa-exclamation' + '"></i>&nbsp';
+    }
     if (listColor) {
         firstCell.setAttribute('style', listColor);
     }
@@ -104,14 +107,9 @@ Module.register("MMM-Buller",{
           listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j=0; j < tasks.length; j++) {
             t = tasks[j];
-            console.log (Date.parse(t.due));
-            console.log (Date.parse(t.due) < new Date);
-            console.log (nbOfTasksDisplayed);
-            console.log (this.config.maxNumberOfTasksDisplayed);
             if (Date.parse(t.due) < new Date && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
-              console.log (t.title);
               nbOfTasksDisplayed++;
-              table.appendChild(this.getTaskRow(t, listColor));
+              table.appendChild(this.getTaskRow(t, listColor, true));
             } else {
               tasksLeft.push(t);
             }
