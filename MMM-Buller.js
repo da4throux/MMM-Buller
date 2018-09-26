@@ -115,7 +115,12 @@ Module.register("MMM-Buller",{
             }
           }
           while (tasksLeft.length > 0 && nbOfTasksDisplayed < this.config.maxNumberOfUsualTasksDisplayed && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
-            table.appendChild(tasksLeft.splice( Math.floor(Math.random() * Math.floor(tasksLeft.length - 1)), 1));
+            table.appendChild(
+              this.getTaskRow(
+                tasksLeft.splice( Math.floor(Math.random() * Math.floor(tasksLeft.length - 1)), 1),
+                listColor
+              )
+            );
           }
         }
       }
