@@ -57,10 +57,10 @@ Module.register("MMM-Buller",{
     }, this.config.updateDomFrequence);
   },
 
-  getHeader: function () {
-    var header = this.data.header;
-    return header;
-  },
+//  getHeader: function () {
+//    var header = this.data.header;
+//    return header;
+//  },
 
   // Add Task to an element (to simplify getDom)
   getTaskRow: function (task, listColor) {
@@ -141,7 +141,10 @@ Module.register("MMM-Buller",{
     switch (notification) {
       case "DATA":
         this.infos = payload;
-        this.loaded = true;
+        if (!this.loaded) {
+          this.loaded = true;
+          this.getDom();
+        }
         console.log (this.infos);
         break;
     }
