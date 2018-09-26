@@ -19,7 +19,7 @@ Module.register("MMM-Buller",{
     },
     maxNumberOfTaskDisplayed: 3,
     minNumberOfTaskDisplayed: 1,
-    updateDomFrequence: 20 * 1000, //20 seconds
+    updateDomFrequence: 3 * 1000, //20 seconds
   },
 
   // Define required scripts.
@@ -156,7 +156,7 @@ Module.register("MMM-Buller",{
         this.infos = payload;
         if (!this.loaded) {
           this.loaded = true;
-          this.getDom();
+          this.updateDom();
         }
         if (this.config.debug) {
           console.log (this.infos);
