@@ -17,9 +17,9 @@ Module.register("MMM-Buller",{
       metaData: false, //true: leveraging metaData from the task
       alwaysShowDueTask: true, //true: a due Task will always be shown on the mirror
     },
-    maxNumberOfTaskDisplayed: 3,
-    minNumberOfTaskDisplayed: 1,
-    updateDomFrequence: 3 * 1000, //20 seconds
+    maxNumberOfTasksDisplayed: 3,
+    maxNumberOfUsualTasksDisplayed: 1,
+    updateDomFrequence: 30 * 1000, //20 seconds
   },
 
   // Define required scripts.
@@ -87,7 +87,7 @@ Module.register("MMM-Buller",{
     var tasks, tasksLeft, i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
-    var nbOfTaskDisplayed = 0;
+    var nbOfTasksDisplayed = 0;
     if (lists.length > 0) {
       if (!this.loaded) {
         wrapper.innerHTML = "Loading information ...";
@@ -104,14 +104,19 @@ Module.register("MMM-Buller",{
           listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j=0; j < tasks.length; j++) {
             t = tasks[j];
-            if (Date.parse(t.due) < new Date && nbOfTaskDisplayed < this.config.maxNumberOfTaskDisplayed) {
-              nbOfTaskDisplayed++;
+            console.log (Date.parse(t.due));
+            console.log (Date.parse(t.due) < new Date);
+            console.log (nbOfTasksDisplayed);
+            console.log (this.config.maxNumberOfTasksDisplayed);
+            if (Date.parse(t.due) < new Date && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
+              console.log (t.title);
+              nbOfTasksDisplayed++;
               table.appendChild(this.getTaskRow(t, listColor));
             } else {
               tasksLeft.push(t);
             }
           }
-          while (tasksLeft.length > 0 && nbOfTaskDisplayed < this.config.minNumberOfTaskDisplayed && nbOfTaskDisplayed < this.config.maxNumberOfTaskDisplayed) {
+          while (tasksLeft.length > 0 && nbOfTasksDisplayed < this.config.maxNumberOfUsualTasksDisplayed && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
             table.appendChild(tasksLeft.splice( Math.floor(Math.random() * Math.floor(tasksLeft.length - 1)), 1));
           }
         }
