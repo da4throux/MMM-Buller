@@ -15,8 +15,11 @@ Module.register("MMM-Buller",{
       updateInterval: 1 * 60 * 1000 * 60 * 6, // every 6 hours
       initialLoadDelay: 100, // start delay seconds
       metaData: false, //true: leveraging metaData from the task
+      alwaysShowDueTask: true, //true: a due Task will always be shown on the mirror
     },
-    updateDomFrequence: 900,
+    maximumNumberOfTask: 3,
+    minimumNumberOfTask: 1,
+    updateDomFrequence: 20 * 1000, //20 seconds
   },
 
   // Define required scripts.
@@ -59,6 +62,20 @@ Module.register("MMM-Buller",{
     return header;
   },
 
+  // Add Task to an element (to simplify getDom)
+  getTaskRow: function (task, listColor) {
+    var firstCell, row = document.createElement("tr");
+    row = document.createElement("tr");
+    firstCell = document.createElement("td");
+    firstCell.className = "align-right bright";
+    firstCell.innerHTML = task.title;
+    if (listColor) {
+        firstCell.setAttribute('style', listColor);
+    }
+    row.appendChild(firstCell);
+    return row;
+  },
+
   // Override dom generator.
   getDom: function() {
     var now = new Date();
@@ -67,6 +84,7 @@ Module.register("MMM-Buller",{
     var tasks,i, j, t, d, n, listColor;
     var table = document.createElement("table");
     var firstCell, secondCell, row;
+    var nbOfTaskDisplayed = 0;
     if (lists.length > 0) {
       if (!this.loaded) {
         wrapper.innerHTML = "Loading information ...";
@@ -81,16 +99,7 @@ Module.register("MMM-Buller",{
           tasks = this.infos[i];
           listColor = l.color ? 'color:' + l.color + ' !important' : false;
           for (j=0; j < tasks.length; j++) {
-            t = tasks[j];
-            row = document.createElement("tr");
-            firstCell = document.createElement("td");
-            firstCell.className = "align-right bright";
-            firstCell.innerHTML = t.title;
-            if (listColor) {
-                firstCell.setAttribute('style', listColor);
-            }
-            row.appendChild(firstCell);
-            table.appendChild(row);
+            table.appendChild(this.getTaskRow(tasks[j], listColor));
           }
         }
       }
