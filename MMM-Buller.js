@@ -164,10 +164,10 @@ Module.register("MMM-Buller",{
     switch (notification) {
       case "DATA":
         this.infos = payload;
-//        if (!this.loaded) {
-//          this.loaded = true;
+        if (!this.loaded) {
+          this.loaded = true;
+        }
           this.updateDom();
-//        }
         if (this.config.debug) {
           console.log (this.infos);
         }
