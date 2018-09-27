@@ -137,8 +137,10 @@ module.exports = NodeHelper.create({
           tasks.forEach((task) => {
             self.config.tasksFetched.push(task);
           })
-          self.config.infos[listDescription.id] = self.config.tasksFetched;
-          self.sendSocketNotification("DATA", self.config.infos);
+          if (JSON.stringiy(self.config.infos[listDescription.id]) !== JSON.stringify(self.config.tasksFetched)) {
+            self.config.infos[listDescription.id] = self.config.tasksFetched;
+            self.sendSocketNotification("DATA", self.config.infos);
+          }
         } else {
           console.log('No tasks found in list.');
         }
