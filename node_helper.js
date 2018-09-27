@@ -137,7 +137,7 @@ module.exports = NodeHelper.create({
           tasks.forEach((task) => {
             self.config.tasksFetched.push(task);
           })
-          if (JSON.stringiy(self.config.infos[listDescription.id]) !== JSON.stringify(self.config.tasksFetched)) {
+          if (JSON.stringify(self.config.infos[listDescription.id]) !== JSON.stringify(self.config.tasksFetched)) {
             self.config.infos[listDescription.id] = self.config.tasksFetched;
             self.sendSocketNotification("DATA", self.config.infos);
           }
