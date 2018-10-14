@@ -118,12 +118,12 @@ Module.register("MMM-Buller",{
               tasksLeft.push([t, l]);
             }
           }
-          while (tasksLeft.length > 0 && nbOfTasksDisplayed < this.config.maxNumberOfUsualTasksDisplayed && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
-            n = Math.floor(Math.random() * Math.floor(tasksLeft.length));
-            t = tasksLeft.splice(n , 1)[0];
-            table.appendChild(this.getTaskRow(t[0], t[1], false));
-            nbOfTasksDisplayed++;
-          }
+        }
+        while (tasksLeft.length > 0 && nbOfTasksDisplayed < this.config.maxNumberOfUsualTasksDisplayed && nbOfTasksDisplayed < this.config.maxNumberOfTasksDisplayed) {
+          n = Math.floor(Math.random() * Math.floor(tasksLeft.length));
+          t = tasksLeft.splice(n , 1)[0];
+          table.appendChild(this.getTaskRow(t[0], t[1], false));
+          nbOfTasksDisplayed++;
         }
       }
     } else {
