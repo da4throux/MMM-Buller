@@ -12,8 +12,8 @@ The second use case will be to be able to set visual reminder on the mirror of t
 The third use case will be to offer an option to leverage meta-data in the task to display the tasks more appropriately (show more of what is relevant for that mirror at that time).
 Name comes from the French word for 'Bubble', made into a verb, which refers to the activity of doing nothing (link to task), and to little bubble of text (link to compliments use case).
 
-# Screenshot TBC
-![screenshot]()
+# Screenshot
+![screenshot]((https://github.com/da4throux/MMM-Buller/MMM-Buller-1.0.png)
 
 # Google Tasks setup
 
@@ -66,4 +66,4 @@ npm install
 }
 ```
 
-#0.1
+#1.0
