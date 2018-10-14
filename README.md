@@ -59,10 +59,25 @@ npm install
 ## config example
 ```
 {
-  lists: [
-    {
-    },
-  ],
+	debug: false,
+        lists: [
+		{
+			type: 'gTasks',
+              		name: 'MMM',   
+              		label: 'da4throux tasks',
+              		updateInterval: 1000 * 60 * 1 * 1, //every minutes
+              		icon: 'fas fa-male',
+            	},
+            	{
+              		type: 'gTasks',
+              		name: 'Compliments',   
+              		label: 'da4throux compliments',
+              		color: 'pink',
+              		icon: 'fas fa-female',
+              		updateInterval: 1000 * 60 * 1 * 1, //every minutes
+            	}
+        ],
+   
 }
 ```
 
