@@ -19,7 +19,7 @@ Name comes from the French word for 'Bubble', made into a verb, which refers to 
 
 0. Obviously a google account is required
 1. follow this [instruction to Turn on the Google Tasks API](https://developers.google.com/tasks/quickstart/nodejs) and get your file `credentials.json` .
-2. Put this file in the module folder.
+2. Put this file in the module folder. Erase any `token.json` file (that would have been previously set-up, in particular if you change account or had an issue).
 3. When first launching the module (doing npm start at the magicmirror level for example), look at the console
 4. A link should be seen in the console, open it in your browser, login as the Google account you want to use the Google tasks from,
 5. it should then display a consent code, copy and paste it back in the terminal.
