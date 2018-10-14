@@ -91,6 +91,7 @@ module.exports = NodeHelper.create({
    * @param {getEventsCallback} callback The callback for the authorized client.
    */
   getNewToken: function(oAuth2Client, callback) {
+    var self = this;
     const authUrl = oAuth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: SCOPES,
