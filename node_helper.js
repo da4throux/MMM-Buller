@@ -140,11 +140,12 @@ module.exports = NodeHelper.create({
           })
           if (JSON.stringify(self.config.infos[listDescription.id]) !== JSON.stringify(self.config.tasksFetched)) {
             self.config.infos[listDescription.id] = self.config.tasksFetched;
-            self.sendSocketNotification("DATA", self.config.infos);
           }
         } else {
           console.log('No tasks found in list.');
+          self.config.infos[listDescription.id] = [];
         }
+        self.sendSocketNotification("DATA", self.config.infos);
       })
       .catch(err => {
         console.error('When Buller called gTasks for ' + self.gTasks[listDescription.name] + ' list, it returned an error: ' + err);
