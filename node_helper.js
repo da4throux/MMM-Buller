@@ -130,11 +130,11 @@ module.exports = NodeHelper.create({
       .then(res => {
         const tasks = res.data.items;
         self.config.tasksFetched = [];
+        if (self.config.debug) {
+          console.log ('received list');
+          console.log (JSON.stringify(res.data.items));
+        }
         if (tasks) {
-          if (self.config.debug) {
-            console.log ('received list');
-            console.log (JSON.stringify(res.data.items));
-          }
           tasks.forEach((task) => {
             self.config.tasksFetched.push(task);
           })
