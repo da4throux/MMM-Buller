@@ -13,7 +13,7 @@ The third use case will be to offer an option to leverage meta-data in the task 
 Name comes from the French word for 'Bubble', made into a verb, which refers to the activity of doing nothing (link to task), and to little bubble of text (link to compliments use case).
 
 # Screenshot
-![screenshot]((https://github.com/da4throux/MMM-Buller/MMM-Buller-1.0.png)
+![screenshot](https://github.com/da4throux/MMM-Buller/blob/master/MMM-Buller-1.0.png)
 
 # Google Tasks setup
 
@@ -59,10 +59,25 @@ npm install
 ## config example
 ```
 {
-  lists: [
-    {
-    },
-  ],
+	debug: false,
+        lists: [
+		{
+			type: 'gTasks',
+              		name: 'MMM',   
+              		label: 'da4throux tasks',
+              		updateInterval: 1000 * 60 * 1 * 1, //every minutes
+              		icon: 'fas fa-male',
+            	},
+            	{
+              		type: 'gTasks',
+              		name: 'Compliments',   
+              		label: 'da4throux compliments',
+              		color: 'pink',
+              		icon: 'fas fa-female',
+              		updateInterval: 1000 * 60 * 1 * 1, //every minutes
+            	}
+        ],
+   
 }
 ```
 
